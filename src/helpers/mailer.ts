@@ -24,10 +24,23 @@ export const sendEmail = async ({email, emailType, userId} : any) => {
             host: "sandbox.smtp.mailtrap.io",
             port: 2525,
             auth: {
-              user: "438abd96e5b330",
-              pass: "691340cadb6e4e"
+              user: process.env.MAILTRAP_USER,
+              pass: process.env.MAILTRAP_PASSWORD
             }
           });
+
+         if(emailType === "RESET"){
+            const mailOptions = {
+                from : 'maitryee@gmail.com',
+                to : email,
+                subject: emailType === "VERIFY" ? "Verify your email" : "Reset your password",
+                html: `<p>Click <a href="${process.env.DOMAIN}/resetpassword?token=${hashedToken}">here </a> 
+                to ${emailType === "VERIFY" ? "verify your email" : "reset your password"} <br />  or click here <br /> ${process.env.DOMAIN}/resetpassword?token=${hashedToken}</p>`
+          
+            }
+           const mailresponse = await transport.sendMail(mailOptions);
+           return mailresponse;
+         }
 
           const mailOptions = {
             from : 'maitryee@gmail.com',

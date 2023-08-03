@@ -57,6 +57,7 @@ export default function Login() {
             > {buttonDisable ? "No Login" : "Login"}  </button>
             <br />
             <Link href="/signup">SignUp here</Link>
+            <Link href="/forgotpassword">Forgot Password</Link>
             <Toaster />
             
         </div>

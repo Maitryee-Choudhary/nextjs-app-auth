@@ -8,7 +8,7 @@ export function middleware(request: NextRequest) {
   //do not have token not access to profile
 
   const path = request.nextUrl.pathname;
-  const isPublicPath = path === '/login' || path === '/signup' || path === '/verifyemail';
+  const isPublicPath = path === '/login' || path === '/signup' || path === '/verifyemail' || path=== '/forgotpassword' || path === '/resetpassword';
   const token = request.cookies.get("token")?.value || '';
   
   if(isPublicPath && token){
@@ -29,6 +29,8 @@ export const config = {
     '/login',
     '/signup',
     '/profile/:path*',
-    '/verifyemail'
+    '/verifyemail',
+    '/resetpassword',
+    '/forgotpassword'
   ]
 }

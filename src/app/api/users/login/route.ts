@@ -13,6 +13,7 @@ export async function POST(request: NextRequest){
         console.log(reqBody);
         
         const user = await User.findOne({email});
+        console.log(user);
          if(!user){
             return  NextResponse.json({error:"User does not exist"}, {status: 500});
          }
@@ -23,10 +24,10 @@ export async function POST(request: NextRequest){
             return  NextResponse.json({error:"Password do not match"}, {status: 500});
          }
 
-         //check does user verify email
-         if(!user.isVerified){
-            return  NextResponse.json({error:"Please verify your email"}, {status: 500});
-         }
+        //  //check does user verify email
+        //  if(!user.isVerified){
+        //     return  NextResponse.json({error:"Please verify your email"}, {status: 500});
+        //  }
 
          //create token data
          const tokenData = {
@@ -36,9 +37,9 @@ export async function POST(request: NextRequest){
          }
 
          //create token
-        const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET!, {expiresIn: "1h"});
+        const token =  jwt.sign(tokenData, process.env.TOKEN_SECRET!, {expiresIn: "1h"});
 
-        const response = await NextResponse.json({
+        const response =  NextResponse.json({
             message:"Login Success",
             success: true
         })
@@ -47,8 +48,6 @@ export async function POST(request: NextRequest){
         });
          console.log(response);
         return response;
-
-
 
     }catch(error: any){
         return NextResponse.json({error:error.message}, {status: 500});

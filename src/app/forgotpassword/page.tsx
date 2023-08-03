@@ -1,35 +1,36 @@
 "use client";
 
-import { sendEmail } from "@/helpers/mailer";
-import User from "@/models/userModel";
+
 import React from "react";
 
+import axios from "axios";
 
 export default function ForgotPassword () {
      
-   const [email, setEmail] = React.useState("");
-   const [error, setError] = React.useState(false);
+   const [email, setEmail] = React.useState('');
+  const [error, setError] = React.useState(false);
    
 
    const onSubmit = async () => {
 
-        const user = User.findOne({email});
-        if(!user){
-           setError(true);
-        }else{
+        try{
+            const res = await axios.post("/api/users/forgotpassword",{email});
             setError(false);
-            await sendEmail({email, emailType:"RESET", userId: user._id });
+            console.log(res);
+        }catch(error:any){
+            console.log(error);
+            setError(true);
         }
-      
    }
 
     return(
         <div>
              <label htmlFor="username">Email </label>
-             <input type="email" required value={email} onChange={(e)=>{setEmail(e.target.value)}} name="email"  />
+             <input type="email"  value={email} onChange={(e)=>{setEmail(e.target.value)}} name="email"  />
              <br />
              <button 
-              onClick={onSubmit}> {error ? "User witwith email does not exist" : "Submit"}  </button>
+              onClick={onSubmit}> {error ? "User doesnt exist with email" : "Submit"} </button>
+              
             <br />
         </div>
     )
