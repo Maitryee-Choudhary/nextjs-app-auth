@@ -23,6 +23,11 @@ export async function POST(request: NextRequest){
             return  NextResponse.json({error:"Password do not match"}, {status: 500});
          }
 
+         //check does user verify email
+         if(!user.isVerified){
+            return  NextResponse.json({error:"Please verify your email"}, {status: 500});
+         }
+
          //create token data
          const tokenData = {
             id : user._id,
@@ -46,6 +51,20 @@ export async function POST(request: NextRequest){
 
 
     }catch(error: any){
+        return NextResponse.json({error:error.message}, {status: 500});
+    }
+}
+
+export async function GET(){
+    try{
+       const res = await User.find();
+    
+       return NextResponse.json({
+        message:"Find all users success",
+        success: true,
+        data: res
+       });
+    }catch(error:any){
         return NextResponse.json({error:error.message}, {status: 500});
     }
 }

@@ -25,8 +25,9 @@ export default function Profile() {
        const res = await axios.get('/api/users/me');
        console.log(res.data);
        setUserData(res.data.data._id);
-
     }
+
+    
 
     return(
         <div>

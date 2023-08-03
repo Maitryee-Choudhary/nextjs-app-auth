@@ -16,6 +16,8 @@ export default function Login() {
     email:"",
     password:"",
   });
+
+  const [data,setData] = React.useState();
   
   useEffect(()=>{
        if(user.email.length > 0 && user.password.length > 0)
@@ -40,6 +42,7 @@ export default function Login() {
       }
   }  
    
+
     return(
         <div className="flex flex-col items-center justify-center min-h-scree py-2">
             <h1>{loading ? "Processing" : "Login"} </h1>
@@ -55,6 +58,7 @@ export default function Login() {
             <br />
             <Link href="/signup">SignUp here</Link>
             <Toaster />
+            
         </div>
     )
 }
